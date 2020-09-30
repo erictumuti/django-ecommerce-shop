@@ -39,7 +39,7 @@ class User(AbstractBaseUser, PermissionsMixin):
        help_text = ugettext_lazy('Designates whether the user can log in the site')
     )
     is_active = models.BooleanField(
-       ugettext_lazy('active'),
+       ugettext_lazy('active'), default=True,
        help_text = ugettext_lazy('Designates whether this user should be treated as active')
     )
 
