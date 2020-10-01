@@ -23,7 +23,7 @@ def sign_up(request):
             return HttpResponseRedirect(reverse('App_Login:login'))
     return render(request, 'App_Login/sign_up.html',context={'form':form})
 
-def login(request):
+def login_user(request):
     form = AuthenticationForm()
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
@@ -32,14 +32,15 @@ def login(request):
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user is not None:
-                return HttpResponseRedirect(reverse('App_Login:profile'))
+                login(request,user)
+                return HttpResponseRedirect(reverse('App_Shop:home'))
     return render(request, 'App_Login/login.html', context={'form':form})
 
 @login_required
 def logout_user(request):
     logout(request)
     messages.warning(request, "Logged out Successfully")
-    return HttpResponse("Logged Out successfully")
+    return HttpResponseRedirect(reverse('App_Shop:home'))
 
 
 @login_required
